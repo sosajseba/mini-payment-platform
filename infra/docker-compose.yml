@@ -47,6 +47,13 @@ services:
     ports:
       - "9090:9090"
     restart: always
+  grafana:
+    image: grafana/grafana-enterprise
+    restart: always
+    ports:
+      - '3000:3000'  
+    volumes:
+      - grafanadata:/var/lib/grafana  
 configs:
   rabbitmq-plugins:
     content: "[rabbitmq_management]."       
@@ -56,3 +63,4 @@ volumes:
   rabbitmqlib:
   rabbitmqlog: 
   prometheusdata:
+  grafanadata:
