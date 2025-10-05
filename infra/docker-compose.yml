@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  db-postgres:
+  postgres:
     image: postgres
     restart: always
     shm_size: 128mb
@@ -10,6 +10,14 @@ services:
     environment:
       POSTGRES_DB: payment_platform_db
       POSTGRES_PASSWORD: postgres
+  redis:
+    image: redis:8.2-alpine
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1 --loglevel warning --requirepass cachepass
+    volumes:
+      - cachedata:/data
   adminer:
     image: adminer
     restart: always
@@ -17,3 +25,4 @@ services:
       - 8080:8080
 volumes:
   pgdata:
+  cachedata:
