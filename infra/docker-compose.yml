@@ -39,6 +39,14 @@ services:
     restart: always
     ports:
       - 8080:8080
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheusdata:/prometheus
+    ports:
+      - "9090:9090"
+    restart: always
 configs:
   rabbitmq-plugins:
     content: "[rabbitmq_management]."       
@@ -47,3 +55,4 @@ volumes:
   cachedata:
   rabbitmqlib:
   rabbitmqlog: 
+  prometheusdata:
