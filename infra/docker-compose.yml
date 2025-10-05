@@ -53,7 +53,17 @@ services:
     ports:
       - '3000:3000'  
     volumes:
-      - grafanadata:/var/lib/grafana  
+      - grafanadata:/var/lib/grafana
+  postgres-exporter:
+    image: prometheuscommunity/postgres-exporter:latest
+    restart: always
+    ports:
+      - "9187:9187"
+    environment:
+      DATA_SOURCE_URI: postgres:5432/postgres?sslmode=disable
+      DATA_SOURCE_USER: postgres 
+      DATA_SOURCE_PASS: postgres
+    depends_on: [postgres]
 configs:
   rabbitmq-plugins:
     content: "[rabbitmq_management]."       
