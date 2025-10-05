@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 
 services:
   postgres:
@@ -18,11 +18,32 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass cachepass
     volumes:
       - cachedata:/data
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq
+      RABBITMQ_DEFAULT_PASS: rabbitmq
+    configs:
+      - source: rabbitmq-plugins
+        target: /etc/rabbitmq/enabled_plugins
+    volumes:
+      - rabbitmqlib:/var/lib/rabbitmq
+      - rabbitmqlog:/var/log/rabbitmq
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+configs:
+  rabbitmq-plugins:
+    content: "[rabbitmq_management]."       
 volumes:
   pgdata:
   cachedata:
+  rabbitmqlib:
+  rabbitmqlog: 
