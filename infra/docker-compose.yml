@@ -65,6 +65,15 @@ services:
       DATA_SOURCE_USER: postgres 
       DATA_SOURCE_PASS: postgres
     depends_on: [postgres]
+  redis-exporter:
+    image: oliver006/redis_exporter:latest
+    restart: always
+    ports:
+      - "9121:9121"
+    environment:
+      REDIS_ADDR: redis:6379
+      REDIS_PASSWORD: cachepass
+    depends_on: [redis]
 configs:
   rabbitmq-plugins:
     content: "[rabbitmq_management,rabbitmq_prometheus]."       
