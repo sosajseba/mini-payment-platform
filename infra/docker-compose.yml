@@ -48,6 +48,7 @@ services:
     ports:
       - "9090:9090"
     restart: always
+    depends_on: [postgres-exporter,redis-exporter,rabbitmq]
   grafana:
     image: grafana/grafana-enterprise
     restart: always
