@@ -62,7 +62,7 @@ services:
     ports:
       - "9187:9187"
     environment:
-      DATA_SOURCE_URI: postgres:5432/postgres?sslmode=disable
+      DATA_SOURCE_URI: postgres:5432/payment_platform_db?sslmode=disable
       DATA_SOURCE_USER: postgres 
       DATA_SOURCE_PASS: postgres
     depends_on: [postgres]
