@@ -11,4 +11,7 @@ scrape_configs:
       - targets: ['rabbitmq:15692']
   - job_name: redis
     static_configs:
-      - targets: ['redis-exporter:9121']        
+      - targets: ['redis-exporter:9121']       
+  - job_name: checkout-api
+    static_configs:
+      - targets: ['checkout-api:3001']      
