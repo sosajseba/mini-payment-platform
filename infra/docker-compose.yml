@@ -1,12 +1,10 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres
     restart: always
     shm_size: 128mb
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - pgroot:/var/lib/postgresql
       - ./postgresql/init-scripts:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_DB: payment_platform_db
@@ -94,7 +92,7 @@ configs:
   rabbitmq-plugins:
     content: "[rabbitmq_management,rabbitmq_prometheus]."       
 volumes:
-  pgdata:
+  pgroot:
   cachedata:
   rabbitmqlib:
   rabbitmqlog: 
