@@ -1,11 +1,21 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { PrometheusModule } from "@willsoto/nestjs-prometheus";
+import { PaymentsModule } from './payments/payments.module';
+import { IdempotencyService } from './idempotency/idempotency-service';
+import { IdempotencyMiddleware } from './middlewares/idempotency-middleware';
 
 @Module({
-  imports: [PrometheusModule.register()],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    PrometheusModule.register(),
+    PaymentsModule],
+  controllers: [],
+  providers: [IdempotencyService],
 })
-export class AppModule {}
+
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(IdempotencyMiddleware)
+      .forRoutes({ path: 'payments', method: RequestMethod.POST });
+  }
+}
